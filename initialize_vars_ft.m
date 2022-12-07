@@ -8,18 +8,22 @@ function data = initialize_vars_ft(raw,srate)
     data=raw;
     if size(data,1)==264
         labels = load('/home/tvayryne/CARBON_PROJEKTI/labels_carbon.mat')
+        chanlocs = load('chanlocs257.mat')
     elseif size(data,1)==258
        labels = load('labels_ft_258.mat')
+       chanlocs = load('chanlocs257.mat')
     elseif size(data,1)==256
        labels = load('labels_ft_258.mat')
+       chanlocs = load('chanlocs256.mat')
        data([257,258],:)=zeros(2,size(data,2)); 
     elseif size(data,1)==257
        labels = load('labels_ft_258.mat')
        data(258,:)=zeros(1,size(data,2));
+       chanlocs = load('chanlocs257.mat')
     elseif size(data,1)==32
         labels = load('labels_ft_33.mat') % Add reference null-channel
         data(33,:)=data(32,:);data(32,:)=0; % Ref 32 ecg 33
-        
+        chanlocs = load('bp_locs.mat')       
     else
         error('Unregognized data dimensions!')
 
@@ -28,8 +32,9 @@ function data = initialize_vars_ft(raw,srate)
     datafile{1,1} = data;
     times{1,1} = [1:1:size(data,2)]/srate;
     clear data;
-    data.label = labels.labels.chanlabels      % cell-array containing strings, Nchan*1
-    data.fsample = srate     % sampling frequency in Hz, single number
+    data.label = labels.labels.chanlabels;      % cell-array containing strings, Nchan*1
+    data.chanlocs = chanlocs.chanlocs;
+    data.fsample = srate;     % sampling frequency in Hz, single number
     data.trial = datafile;   % cell-array containing a data matrix for each
     % trial (1*Ntrial), each data matrix is a Nchan*Nsamples matrix
     data.time  = times;      % cell-array containing a time axis for each
