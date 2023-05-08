@@ -1,5 +1,7 @@
 # PIPET
-Matlab tool for EEG preprocessing tool with user interface.
+Matlab tool for EEG preprocessing tool with user interface.  
+
+Supports brainvision generic exports (.dat) and matlab (.mat) files.  
 
 Requirements:
 Fieldtrip: www.fieldtriptoolbox.org  
